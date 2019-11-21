@@ -230,15 +230,29 @@ const createShowMoreButtonTemplate = () => {
   );
 };
 
+const createUserLevelTemplate = () => {
+  return (
+    `
+    <section class="header__profile profile">
+      <p class="profile__rating">Movie Buff</p>
+      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
+    </section>
+    `
+  );
+};
+
 const renderTemplate = (wrapper, template, position = `beforeend`) => {
   wrapper.insertAdjacentHTML(position, template);
 };
 
-const footer = document.querySelector(`.footer`);
+
+const siteHeader = document.querySelector(`.header`);
 const siteMain = document.querySelector(`.main`);
+const footer = document.querySelector(`.footer`);
 const cardWrapper = siteMain.querySelector(`.films-list .films-list__container`);
 const cardsExtraWrapper = siteMain.querySelectorAll(`.films-list--extra .films-list__container`);
 
+renderTemplate(siteHeader, createUserLevelTemplate());
 renderTemplate(siteMain, createNavigationTemplate(), `afterbegin`);
 
 new Array(FILM_COUNT)
