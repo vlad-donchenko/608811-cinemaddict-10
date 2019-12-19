@@ -32,49 +32,57 @@ const filmsList = filmsWrapper.querySelector(`.films-list`);
 const mainFilmListContainer = filmsList.querySelector(`.films-list__container`);
 renderTemplate(filmsList, createShowMoreButtonTemplate());
 
-const getTopRatingValue = (filmsArray) => {
-  const ratings = filmsArray.slice().map((filmArrayItem) => {
-    return filmArrayItem.rating;
+const getTopExtraFilms = (filmsArray, nameProperty = `rating`) => {
+  return filmsArray.slice().sort((a, b) => {
+    return b[nameProperty] - a[nameProperty];
   });
-
-  ratings.sort((a, b) => {
-    return b - a;
-  });
-
-  const ratingsTopValue = ratings.slice(1, SHOWING_FILM_COUNT_EXTRA_ON_START);
-
-  return (ratingsTopValue[0] > 0) ? ratingsTopValue[0] : 0;
 };
 
-const getTopRatingFilms = (ratingValue, filmsArray) => {
-  if (ratingValue) {
-    const topFilms = [];
-
-    filmsArray.map((filmArrayItem) => {
-      return (ratingValue <= Number(filmArrayItem.rating) && Number(filmArrayItem.rating) !== 0) ? topFilms.push(filmArrayItem) : ``;
-    });
-
-    return topFilms;
-  } else {
-    return 0;
-  }
+const renderTopRatedFilms = (ratingFilms, container) => {
+  ratingFilms.forEach((currentElement) => {
+    renderTemplate(container, createCardTemplate(currentElement));
+  });
 };
 
-const renderTopRatedFilms = (ratingFilms) => {
-  if (ratingFilms) {
+const renderMostCommentedFilms = (mostCommentFilms, container) => {
+  mostCommentFilms.forEach((currentElement) => {
+    renderTemplate(container, createCardTemplate(currentElement));
+  });
+};
+
+const renderExtraFilms = (ratingFilms, mostCommentFilms) => {
+  if (ratingFilms && mostCommentFilms) {
+    ratingFilms = ratingFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
+    mostCommentFilms = mostCommentFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
+
     renderTemplate(filmsWrapper, creatFilmsExtraTemplate(`Top rated`));
+    renderTemplate(filmsWrapper, creatFilmsExtraTemplate(`Most commented`));
 
-    const topRatedFilmsSection = filmsWrapper.querySelector(`.films-list--extra`);
-    const topRatedFilmsList = topRatedFilmsSection.querySelector(`.films-list__container`);
+    const extraFilmsWrappers = filmsWrapper.querySelectorAll(`.films-list--extra`);
+    const topRatedFilmsList = extraFilmsWrappers[0].querySelector(`.films-list__container`);
+    const mostCommentedFilmsList = extraFilmsWrappers[1].querySelector(`.films-list__container`);
+    renderTopRatedFilms(ratingFilms, topRatedFilmsList);
+    renderMostCommentedFilms(mostCommentFilms, mostCommentedFilmsList);
 
-    ratingFilms.forEach((ratingFilm) => {
-      renderTemplate(topRatedFilmsList, createCardTemplate(ratingFilm));
-    });
+  } else if (ratingFilms) {
+    ratingFilms = ratingFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
 
+    renderTemplate(filmsWrapper, creatFilmsExtraTemplate(`Top rated`));
+    const extraFilmsWrappers = filmsWrapper.querySelector(`.films-list--extra`);
+    const topRatedFilmsList = extraFilmsWrappers.querySelector(`.films-list__container`);
+    renderTopRatedFilms(ratingFilms, topRatedFilmsList);
+  } else if (mostCommentFilms) {
+    mostCommentFilms = mostCommentFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
+
+    renderTemplate(filmsWrapper, creatFilmsExtraTemplate(`Most commented`));
+    const extraFilmsWrappers = filmsWrapper.querySelector(`.films-list--extra`);
+    const mostCommentedFilmsList = extraFilmsWrappers.querySelector(`.films-list__container`);
+
+    renderMostCommentedFilms(mostCommentFilms, mostCommentedFilmsList);
   }
 };
 
-renderTopRatedFilms(getTopRatingFilms(getTopRatingValue(films), films), films);
+renderExtraFilms(getTopExtraFilms(films), getTopExtraFilms(films, `comments`));
 
 let showingTasksCount = SHOWING_FILM_COUNT_ON_START;
 films.slice(0, showingTasksCount).forEach((film) => renderTemplate(mainFilmListContainer, createCardTemplate(film)));
