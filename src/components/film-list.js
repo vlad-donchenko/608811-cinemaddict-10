@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createFilmsTemplate = () => {
   return (
     `
@@ -11,19 +13,22 @@ const createFilmsTemplate = () => {
   );
 };
 
-const creatFilmsExtraTemplate = (sectionTitle) => {
-  return (
-    `
-    <section class="films-list--extra">
-        <h2 class="films-list__title">${sectionTitle}</h2>
-        <div class="films-list__container"></div>
-    </section>
-    `
-  );
-};
-
-export default class FilmsList {
+export default class FilmList {
   constructor() {
-    this.element = null;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmsTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+  }
+
+  removeElement() {
+    this._element = null;
   }
 }
