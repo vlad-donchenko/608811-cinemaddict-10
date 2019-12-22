@@ -21,7 +21,7 @@ const createNavigationTemplate = (filmsCounts) => {
   );
 };
 
-class Menu {
+export default class Menu {
   constructor(filmsCount) {
     this._filmsCount = filmsCount;
     this._element = null;
@@ -43,5 +43,3 @@ class Menu {
     this._element = null;
   }
 }
-
-export {createNavigationTemplate};
