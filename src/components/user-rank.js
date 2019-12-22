@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createUserLevelTemplate = (watchedMoviesCount) => {
   let userRank = ``;
   if (watchedMoviesCount >= 1 && watchedMoviesCount <= 10) {
@@ -17,5 +19,28 @@ const createUserLevelTemplate = (watchedMoviesCount) => {
     `
   );
 };
+
+class UserRank {
+  constructor(watchedMoviesCount) {
+    this._watchedMoviesCount = watchedMoviesCount;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createUserLevelTemplate(this._watchedMoviesCount);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
 
 export {createUserLevelTemplate};
