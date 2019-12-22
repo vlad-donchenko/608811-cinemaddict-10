@@ -1,9 +1,11 @@
-const createFilmGenreMarkup = (ganre) => {
-  return `<span class="film-details__genre">${ganre}</span>`;
+import {createElement} from '../utils.js';
+
+const createFilmGenreMarkup = (genre) => {
+  return `<span class="film-details__genre">${genre}</span>`;
 };
 
-const createFilmTemplate = (ganres) => {
-  const genreMarkup = ganres.map((it) => {
+const createFilmTemplate = (genres) => {
+  const genreMarkup = genres.map((it) => {
     return createFilmGenreMarkup(it);
   });
   return genreMarkup.join(`\n`);
@@ -184,5 +186,27 @@ const createModalTemplate = (popap, comment) => {
     `
   );
 };
+
+class Popap {
+  constructor(popap, comment) {
+    this._popap = popap;
+    this.comment = comment;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createModalTemplate(this._popap, this.comment);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
 
 export {createModalTemplate};
