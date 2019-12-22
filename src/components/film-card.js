@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createCardTemplate = (film) => {
   const {name, rating, year, runtime, genres, poster, description, comments} = film;
   const commentsWithTitle = `${comments} ${(comments > 1) ? `comments` : `comment`}`;
@@ -24,5 +26,28 @@ const createCardTemplate = (film) => {
     `
   );
 };
+
+class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this.element = null;
+  }
+
+  getTemplate() {
+    return createCardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this.element) {
+      this.element = createElement(this.getTemplate());
+    }
+
+    return this.element;
+  }
+
+  removeElement() {
+    this.element = null;
+  }
+}
 
 export {createCardTemplate};
