@@ -8,6 +8,9 @@ import {films, getRandomIntegerNumber} from './mock/film-card';
 import {menuFilmCount} from './mock/filter';
 import {popaps} from './mock/popap';
 import {comments} from './mock/comment';
+import {createElement, render, RenderPosition} from './utils';
+
+//console.log(createElement(createUserLevelTemplate(10)));
 
 const SHOWING_FILM_COUNT_ON_START = 5;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 5;
