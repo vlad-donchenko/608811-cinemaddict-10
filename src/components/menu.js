@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createNavigationTemplate = (filmsCounts) => {
   const [watchList, history, favorites] = filmsCounts;
 
@@ -18,5 +20,28 @@ const createNavigationTemplate = (filmsCounts) => {
     `
   );
 };
+
+class Menu {
+  constructor(filmsCount) {
+    this._filmsCount = filmsCount;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createNavigationTemplate(this._filmsCount);
+  }
+
+  getElement() {
+    if (this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
 
 export {createNavigationTemplate};
