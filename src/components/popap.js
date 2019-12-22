@@ -187,7 +187,7 @@ const createModalTemplate = (popap, comment) => {
   );
 };
 
-class Popap {
+export default class Popap {
   constructor(popap, comment) {
     this._popap = popap;
     this.comment = comment;
@@ -208,5 +208,3 @@ class Popap {
     this._element = null;
   }
 }
-
-export {createModalTemplate};

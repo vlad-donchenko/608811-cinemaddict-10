@@ -8,7 +8,7 @@ const createShowMoreButtonTemplate = () => {
   );
 };
 
-class ShowMoreButton {
+export default class ShowMoreButton {
   constructor() {
     this._element = null;
   }
@@ -29,5 +29,3 @@ class ShowMoreButton {
     this._element = null;
   }
 }
-
-export {createShowMoreButtonTemplate};

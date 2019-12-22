@@ -20,7 +20,7 @@ const createUserLevelTemplate = (watchedMoviesCount) => {
   );
 };
 
-class UserRank {
+export default class UserRank {
   constructor(watchedMoviesCount) {
     this._watchedMoviesCount = watchedMoviesCount;
     this._element = null;
@@ -42,5 +42,3 @@ class UserRank {
     this._element = null;
   }
 }
-
-export {createUserLevelTemplate};
