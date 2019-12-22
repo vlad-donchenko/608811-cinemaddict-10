@@ -22,4 +22,8 @@ const creatFilmsExtraTemplate = (sectionTitle) => {
   );
 };
 
-export {createFilmsTemplate, creatFilmsExtraTemplate};
+export default class FilmsList {
+  constructor() {
+    this.element = null;
+  }
+}
