@@ -102,7 +102,7 @@ render(filmsList, showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND
 
 const getTopRatedFilms = (filmsArray, nameProperty) => {
   return filmsArray.slice().sort((a, b) => {
-    return b[nameProperty] - a[nameProperty];
+    return Number(b[nameProperty]) - Number(a[nameProperty]);
   });
 };
 
@@ -119,7 +119,7 @@ const renderExtraFilms = (filmsArray, container) => {
 };
 
 const checkExtraFilms = (ratingFilms, mostCommentFilms) => {
-  if (ratingFilms && mostCommentFilms) {
+  if (Number(ratingFilms[0].rating) !== 0 && mostCommentFilms[0].comments.length) {
     ratingFilms = ratingFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
     mostCommentFilms = mostCommentFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
 
@@ -132,14 +132,14 @@ const checkExtraFilms = (ratingFilms, mostCommentFilms) => {
     renderExtraFilms(ratingFilms, topRatedFilmsList);
     renderExtraFilms(mostCommentFilms, mostCommentedFilmsList);
 
-  } else if (ratingFilms) {
+  } else if (Number(ratingFilms[0].rating) !== 0) {
     ratingFilms = ratingFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
 
     render(filmsWrapper, new FilmExtraComponent(`Top rated`).getElement(), RenderPosition.BEFOREEND);
     const extraFilmsWrappers = filmsWrapper.querySelector(`.films-list--extra`);
     const topRatedFilmsList = extraFilmsWrappers.querySelector(`.films-list__container`);
     renderExtraFilms(ratingFilms, topRatedFilmsList);
-  } else if (mostCommentFilms) {
+  } else if (mostCommentFilms[0].comments.length) {
     mostCommentFilms = mostCommentFilms.slice(0, SHOWING_FILM_COUNT_EXTRA_ON_START);
 
     render(filmsWrapper, new FilmExtraComponent(`Most commented`).getElement(), RenderPosition.BEFOREEND);
