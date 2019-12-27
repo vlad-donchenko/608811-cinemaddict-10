@@ -3,11 +3,10 @@ const RenderPosition = {
   BEFOREEND: `beforeend`,
 };
 
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
+const createElement = function (template) {
+  const element = document.createElement(`div`);
+  element.innerHTML = template;
+  return element.firstChild;
 };
 
 const render = (container, element, place) => {

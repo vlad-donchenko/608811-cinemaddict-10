@@ -1,7 +1,7 @@
 import {createElement} from '../utils.js';
 
 const createUserLevelTemplate = (watchedMoviesCount) => {
-  let userRank = ``;
+  let userRank = null;
   if (watchedMoviesCount >= 1 && watchedMoviesCount <= 10) {
     userRank = `novice`;
   } else if (watchedMoviesCount >= 11 && watchedMoviesCount <= 20) {
@@ -11,16 +11,14 @@ const createUserLevelTemplate = (watchedMoviesCount) => {
   }
 
   return (
-    `
-    <section class="header__profile profile">
+    `<section class="header__profile profile">
       <p class="profile__rating">${userRank}</p>
       <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    </section>
-    `
+    </section>`
   );
 };
 
-export default class UserRank {
+class UserRank {
   constructor(watchedMoviesCount) {
     this._watchedMoviesCount = watchedMoviesCount;
     this._element = null;
@@ -42,3 +40,5 @@ export default class UserRank {
     this._element = null;
   }
 }
+
+export default UserRank;

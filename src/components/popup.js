@@ -15,8 +15,7 @@ const createCommentTemplate = (comment) => {
   const {emoji, commentText, commentAuthor, commentDay} = comment;
 
   return (
-    `
-     <li class="film-details__comment">
+    `<li class="film-details__comment">
         <span class="film-details__comment-emoji">
             <img src="${emoji}" width="55" height="55" alt="emoji">
         </span>
@@ -28,8 +27,7 @@ const createCommentTemplate = (comment) => {
                 <button class="film-details__comment-delete">Delete</button>
             </p>
         </div>
-     </li>
-    `
+     </li>`
   );
 };
 
@@ -100,12 +98,11 @@ const createCommentWrapperTemplate = (comment) => {
   );
 };
 
-const createModalTemplate = (popap, comment) => {
-  const {poster, name, originalName, rating, director, writers, actors, year, runtime, country, genres, age, description} = popap;
+const createModalTemplate = (popup, comment) => {
+  const {poster, name, originalName, rating, director, writers, actors, year, runtime, country, genres, age, description} = popup;
 
   return (
-    `
-    <section class="film-details">
+    `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
         <div class="form-details__top-container">
           <div class="film-details__close">
@@ -182,14 +179,13 @@ const createModalTemplate = (popap, comment) => {
 
          ${createCommentWrapperTemplate(comment)}
       </form>
-    </section>
-    `
+    </section>`
   );
 };
 
-export default class Popap {
-  constructor(popap, comment) {
-    this._popap = popap;
+export default class Popup {
+  constructor(popup, comment) {
+    this._popap = popup;
     this.comment = comment;
     this._element = null;
   }
@@ -202,6 +198,8 @@ export default class Popap {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
+
+    return this._element;
   }
 
   removeElement() {

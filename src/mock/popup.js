@@ -1,4 +1,4 @@
-import {films, getRandomIntegerNumber} from './film-card';
+import {getRandomIntegerNumber} from './film-card';
 
 const directors = [
   `Anthony Mann`,
@@ -40,7 +40,7 @@ const countries = [
   `Canada`,
 ];
 
-const generatePopap = (filmCard) => {
+const generatePopup = (filmCard) => {
   return {
     poster: filmCard.poster,
     name: filmCard.name,
@@ -58,14 +58,12 @@ const generatePopap = (filmCard) => {
   };
 };
 
-const generatePopaps = (filmsArray) => {
+const generatePopups = (filmsArray) => {
   return new Array(filmsArray.length)
     .fill(``)
     .map((currentValue, index) => {
-      return generatePopap(filmsArray[index]);
+      return generatePopup(filmsArray[index]);
     });
 };
 
-const popaps = generatePopaps(films);
-
-export {popaps};
+export {generatePopups};
