@@ -1,8 +1,8 @@
 import {createElement} from '../utils.js';
 
 const createCardTemplate = (film) => {
-  const {name, rating, year, runtime, genres, poster, description, comments} = film;
-  const commentsWithTitle = `${comments} ${(comments > 1) ? `comments` : `comment`}`;
+  const {name, rating, year, runtime, genres, poster, description} = film;
+  const commentsWithTitle = `${film.comments.length} ${(film.comments > 1) ? `comments` : `comment`}`;
 
   return (
     `<article class="film-card">

@@ -98,8 +98,8 @@ const createCommentWrapperTemplate = (comment) => {
   );
 };
 
-const createModalTemplate = (popup, comment) => {
-  const {poster, name, originalName, rating, director, writers, actors, year, runtime, country, genres, age, description} = popup;
+const createModalTemplate = (film) => {
+  const {name, rating, year, runtime, genres, poster, description, director, writers, actors, country, age} = film;
 
   return (
     `<section class="film-details">
@@ -119,7 +119,7 @@ const createModalTemplate = (popup, comment) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${name}</h3>
-                  <p class="film-details__title-original">${originalName}</p>
+                  <p class="film-details__title-original">${name}</p>
                 </div>
 
                 <div class="film-details__rating">
@@ -177,21 +177,20 @@ const createModalTemplate = (popup, comment) => {
           </section>
         </div>
 
-         ${createCommentWrapperTemplate(comment)}
+         ${createCommentWrapperTemplate(film.comments)}
       </form>
     </section>`
   );
 };
 
 export default class Popup {
-  constructor(popup, comment) {
-    this._popap = popup;
-    this.comment = comment;
+  constructor(film) {
+    this._film = film;
     this._element = null;
   }
 
   getTemplate() {
-    return createModalTemplate(this._popap, this.comment);
+    return createModalTemplate(this._film);
   }
 
   getElement() {
