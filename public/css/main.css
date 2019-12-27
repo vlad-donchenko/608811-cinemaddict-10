@@ -172,7 +172,7 @@ button {
   position: absolute;
   top: 50%;
   left: 19%;
-    
+
   width: 20px;
   height: 1px;
 
@@ -266,7 +266,7 @@ button {
   margin-right: 32px;
   padding: 0;
 
-  color: #ffffff;  
+  color: #ffffff;
   text-decoration: none;
 
   background-color: transparent;
@@ -281,7 +281,7 @@ button {
 }
 
 .sort__button--active {
-  color: #ffe800;  
+  color: #ffe800;
 }
 
 .films {
@@ -454,7 +454,13 @@ button {
   height: 50px;
 }
 
+.film-card:focus-within .film-card__poster {
+  bottom: calc(100% - 340px);
+}
 
+.film-card:focus-within .film-card__controls {
+  height: 50px;
+}
 
 .films-list__show-more {
   background: none;
@@ -997,7 +1003,7 @@ button {
 }
 .statistic__rank {
   display: flex;
-  align-items: center; 
+  align-items: center;
   margin: 0;
   margin-bottom: 34px;
   font-size: 50px;
