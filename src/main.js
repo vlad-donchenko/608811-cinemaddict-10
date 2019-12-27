@@ -90,9 +90,7 @@ const filmsWrapper = siteMain.querySelector(`.films`);
 const filmsList = filmsWrapper.querySelector(`.films .films-list`);
 const mainFilmListContainer = filmsList.querySelector(`.films-list__container`);
 let showingFilmCount = SHOWING_FILM_COUNT_ON_START;
-console.log(showingFilmCount);
 
-console.log(films);
 films.slice(0, showingFilmCount).forEach((film, index) => {
   renderFilms(film, popups[index], comments[index], mainFilmListContainer);
 });

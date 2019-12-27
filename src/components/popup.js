@@ -4,7 +4,7 @@ const createFilmGenreMarkup = (genre) => {
   return `<span class="film-details__genre">${genre}</span>`;
 };
 
-const createFilmTemplate = (genres) => {
+const createFilmGenreTemplate = (genres) => {
   const genreMarkup = genres.map((it) => {
     return createFilmGenreMarkup(it);
   });
@@ -155,7 +155,7 @@ const createModalTemplate = (popup, comment) => {
                 <tr class="film-details__row">
                   <td class="film-details__term">Genres</td>
                   <td class="film-details__cell">
-                    ${createFilmTemplate(genres)}
+                    ${createFilmGenreTemplate(genres)}
                 </tr>
               </table>
 
