@@ -171,7 +171,4 @@ if (films.length > 0) {
     }
 
   });
-} else {
-
-
 }
