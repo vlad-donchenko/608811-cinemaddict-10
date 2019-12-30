@@ -49,6 +49,77 @@ const genres = [
   `Mystery`,
 ];
 
+const directors = [
+  `Anthony Mann`,
+  `Charlie Chaplin`,
+  `Sergiy Eisenstein`,
+  `Alfred Hitchcock`,
+  `Federico Fellini`,
+  `James Cameron`,
+  `Steven Spielberg`,
+  `Woody Allen`,
+  `Martin Scorsese`,
+  `Квентін Тарантіно`,
+  `Крістофер Нолан`,
+];
+
+const writers = [
+  `Anne Wigton`,
+  `Heinz Herald`,
+  `Richard Weil`,
+  `William Goldman`,
+  `Emma Thompson`,
+];
+
+const actors = [
+  `Erich von Stroheim`,
+  `Mary Beth Hughes`,
+  `Dan Duryea`,
+  `Tom Hanks`,
+  `Margot Robbie`,
+  `Scarlett Johansson`,
+  `Brad Pitt`,
+];
+
+const countries = [
+  `USA`,
+  `United Kingdom`,
+  `France`,
+  `Russia`,
+  `Canada`,
+];
+
+const emojis = [
+  `./images/emoji/angry.png`,
+  `./images/emoji/puke.png`,
+  `./images/emoji/sleeping.png`,
+  `./images/emoji/smile.png`,
+];
+
+const commentsText = [
+  `Interesting setting and a good cast`,
+  `Booooooooooring`,
+  `Very very old. Meh`,
+  `Almost two hours? Seriously?`,
+];
+
+const generateComment = () => {
+  return {
+    emoji: emojis[getRandomIntegerNumber(0, emojis.length - 1)],
+    commentText: commentsText[getRandomIntegerNumber(0, commentsText.length - 1)],
+    commentAuthor: `Tim Macoveev`,
+    commentDay: `2019/12/31 23:59`,
+  };
+};
+
+const generateComments = (count) => {
+  return new Array(count)
+    .fill(``)
+    .map(() => {
+      return generateComment();
+    });
+};
+
 const flags = [true, false];
 
 const getRandomIntegerNumber = (min, max) => {
@@ -65,7 +136,11 @@ const generateFilm = () => {
     genres: genres.slice(0, getRandomIntegerNumber(1, genres.length - 1)),
     poster: posters[getRandomIntegerNumber(0, posters.length - 1)],
     description: descriptions[getRandomIntegerNumber(0, descriptions.length)] + descriptions[getRandomIntegerNumber(0, descriptions.length - 1)],
-    comments: `${getRandomIntegerNumber(0, 10)}`,
+    director: directors[getRandomIntegerNumber(0, directors.length - 1)],
+    writers: writers.slice(0, getRandomIntegerNumber(1, writers.length - 1)),
+    actors: actors.slice(0, getRandomIntegerNumber(0, actors.length - 1)),
+    country: countries[getRandomIntegerNumber(0, countries.length - 1)],
+    age: getRandomIntegerNumber(4, 18),
     isWatchlist: getRandomIntegerNumber(0, flags.length - 1),
     isHistory: getRandomIntegerNumber(0, flags.length - 1),
     isFavorites: getRandomIntegerNumber(0, flags.length - 1),
@@ -75,7 +150,11 @@ const generateFilm = () => {
 const generateFilms = () => {
   return new Array(COUNT_FILMS)
     .fill(``)
-    .map(generateFilm);
+    .map(() => {
+      const currentFilm = generateFilm();
+      currentFilm.comments = generateComments(getRandomIntegerNumber(0, 10));
+      return currentFilm;
+    });
 };
 
 const films = generateFilms();

@@ -1,9 +1,11 @@
-const createFilmGenreMarkup = (ganre) => {
-  return `<span class="film-details__genre">${ganre}</span>`;
+import {createElement} from '../utils.js';
+
+const createFilmGenreMarkup = (genre) => {
+  return `<span class="film-details__genre">${genre}</span>`;
 };
 
-const createFilmTemplate = (ganres) => {
-  const genreMarkup = ganres.map((it) => {
+const createFilmGenreTemplate = (genres) => {
+  const genreMarkup = genres.map((it) => {
     return createFilmGenreMarkup(it);
   });
   return genreMarkup.join(`\n`);
@@ -13,8 +15,7 @@ const createCommentTemplate = (comment) => {
   const {emoji, commentText, commentAuthor, commentDay} = comment;
 
   return (
-    `
-     <li class="film-details__comment">
+    `<li class="film-details__comment">
         <span class="film-details__comment-emoji">
             <img src="${emoji}" width="55" height="55" alt="emoji">
         </span>
@@ -26,8 +27,7 @@ const createCommentTemplate = (comment) => {
                 <button class="film-details__comment-delete">Delete</button>
             </p>
         </div>
-     </li>
-    `
+     </li>`
   );
 };
 
@@ -98,12 +98,11 @@ const createCommentWrapperTemplate = (comment) => {
   );
 };
 
-const createModalTemplate = (popap, comment) => {
-  const {poster, name, originalName, rating, director, writers, actors, year, runtime, country, genres, age, description} = popap;
+const createModalTemplate = (film) => {
+  const {name, rating, year, runtime, genres, poster, description, director, writers, actors, country, age} = film;
 
   return (
-    `
-    <section class="film-details">
+    `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
         <div class="form-details__top-container">
           <div class="film-details__close">
@@ -120,7 +119,7 @@ const createModalTemplate = (popap, comment) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${name}</h3>
-                  <p class="film-details__title-original">${originalName}</p>
+                  <p class="film-details__title-original">${name}</p>
                 </div>
 
                 <div class="film-details__rating">
@@ -156,7 +155,7 @@ const createModalTemplate = (popap, comment) => {
                 <tr class="film-details__row">
                   <td class="film-details__term">Genres</td>
                   <td class="film-details__cell">
-                    ${createFilmTemplate(genres)}
+                    ${createFilmGenreTemplate(genres)}
                 </tr>
               </table>
 
@@ -178,11 +177,31 @@ const createModalTemplate = (popap, comment) => {
           </section>
         </div>
 
-         ${createCommentWrapperTemplate(comment)}
+         ${createCommentWrapperTemplate(film.comments)}
       </form>
-    </section>
-    `
+    </section>`
   );
 };
 
-export {createModalTemplate};
+export default class Popup {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createModalTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
