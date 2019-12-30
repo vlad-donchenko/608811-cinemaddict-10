@@ -57,8 +57,7 @@ const createCommentContentTemplate = (comments) => {
 
 const createCommentWrapperTemplate = (comment) => {
   return (
-    `
-    <div class="form-details__bottom-container">
+    `<div class="form-details__bottom-container">
           <section class="film-details__comments-wrap">
 
             ${createCommentContentTemplate(comment)}
@@ -93,8 +92,7 @@ const createCommentWrapperTemplate = (comment) => {
               </div>
             </div>
           </section>
-        </div>
-    `
+        </div>`
   );
 };
 
