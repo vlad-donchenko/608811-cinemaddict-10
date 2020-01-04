@@ -157,6 +157,6 @@ const generateFilms = () => {
     });
 };
 
-const films = generateFilms();
+const films = (Number(COUNT_FILMS) > 0) ? generateFilms() : 0;
 
 export {films, getRandomIntegerNumber};

@@ -4,15 +4,17 @@ const menuFilmCount = (films) => {
   let historyCount = 0;
   let favoritesCount = 0;
 
-  films.map((currentFilm) => {
-    if (currentFilm.isWatchlist) {
-      watchListCount++;
-    } else if (currentFilm.isHistory) {
-      historyCount++;
-    } else if (currentFilm.isFavorites) {
-      favoritesCount++;
-    }
-  });
+  if (allCount) {
+    films.map((currentFilm) => {
+      if (currentFilm.isWatchlist) {
+        watchListCount++;
+      } else if (currentFilm.isHistory) {
+        historyCount++;
+      } else if (currentFilm.isFavorites) {
+        favoritesCount++;
+      }
+    });
+  }
 
   return [watchListCount, historyCount, favoritesCount, allCount];
 };
