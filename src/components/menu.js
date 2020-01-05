@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractComponent from "./abstract";
 
 const createNavigationTemplate = (filmsCounts) => {
   const [watchList, history, favorites] = filmsCounts;
@@ -19,25 +19,13 @@ const createNavigationTemplate = (filmsCounts) => {
   );
 };
 
-export default class Menu {
+export default class Menu extends AbstractComponent {
   constructor(filmsCount) {
+    super();
     this._filmsCount = filmsCount;
-    this._element = null;
   }
 
   getTemplate() {
     return createNavigationTemplate(this._filmsCount);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
