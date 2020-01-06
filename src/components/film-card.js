@@ -40,4 +40,10 @@ export default class FilmCard extends AbstractComponent {
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
   }
+
+  setKeyPressHandler(handler) {
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`keydown`, handler);
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`keydown`, handler);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`keydown`, handler);
+  }
 }
