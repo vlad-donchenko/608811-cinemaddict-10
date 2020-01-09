@@ -19,3 +19,8 @@ export const render = (container, component, place) => {
       break;
   }
 };
+
+export const remove = (component) => {
+  component.getElement().remove();
+  component.removeElement();
+};
