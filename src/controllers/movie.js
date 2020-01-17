@@ -81,7 +81,9 @@ export default class MovieController {
   _showPopup() {
     if (this._mode === Mode.DEFAULT) {
       const bodyElement = document.querySelector(`body`);
+      this._popupComponent = this._getPopup(this._film);
       render(bodyElement, this._popupComponent, RenderPosition.BEFOREEND);
+      this._viewChangeHandler();
       document.addEventListener(`keydown`, this._closePopupKeyPressHandler);
       this._mode = Mode.DETAILS;
     }

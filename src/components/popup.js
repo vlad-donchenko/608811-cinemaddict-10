@@ -249,7 +249,6 @@ export default class Popup extends AbstractSmartComponent {
     this._watchlistClickHandler = null;
     this._historyClickHandler = null;
     this._favoriteClickHandler = null;
-    this._subscribeOnEvents();
   }
 
   rerender() {
@@ -257,13 +256,10 @@ export default class Popup extends AbstractSmartComponent {
   }
 
   recoveryListeners() {
-    console.log(`ecoveryListeners`);
     this.setCloseButtonClickHandler(this._closeButtonClickHandler);
     this.setWatchlistClickHandler(this._watchlistClickHandler);
     this.setHistoryClickHandler(this._historyClickHandler);
     this.setFavoriteClickHandler(this._favoriteClickHandler);
-    this._subscribeOnEvents = this._subscribeOnEvents.bind(this);
-    this._subscribeOnEvents();
   }
 
   getTemplate() {
@@ -288,13 +284,5 @@ export default class Popup extends AbstractSmartComponent {
   setFavoriteClickHandler(handler) {
     this.getElement().querySelector(`#favorite`).addEventListener(`change`, handler);
     this._favoriteClickHandler = handler;
-  }
-
-  _subscribeOnEvents() {
-    const element = this.getElement();
-    element.querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
-      console.log(`_subscribeOnEvents-click`);
-      this.rerender();
-    });
   }
 }
