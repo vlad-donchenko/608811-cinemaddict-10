@@ -141,9 +141,9 @@ const generateFilm = () => {
     actors: actors.slice(0, getRandomIntegerNumber(0, actors.length - 1)),
     country: countries[getRandomIntegerNumber(0, countries.length - 1)],
     age: getRandomIntegerNumber(4, 18),
-    isWatchlist: getRandomIntegerNumber(0, flags.length - 1),
-    isHistory: getRandomIntegerNumber(0, flags.length - 1),
-    isFavorites: getRandomIntegerNumber(0, flags.length - 1),
+    isWatchlist: flags[getRandomIntegerNumber(0, flags.length - 1)],
+    isHistory: flags[getRandomIntegerNumber(0, flags.length - 1)],
+    isFavorites: flags[getRandomIntegerNumber(0, flags.length - 1)],
   };
 };
 
