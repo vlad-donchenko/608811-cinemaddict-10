@@ -1,5 +1,14 @@
 import AbstractSmartComponent from "./abstract-smart-component";
 
+const USER_RATING_ITEMS = 9;
+
+export const smileImageMap = {
+  'emoji-smile': `smile.png`,
+  'emoji-sleeping': `sleeping.png`,
+  'emoji-gpuke': `puke.png`,
+  'emoji-angry': `angry.png`,
+};
+
 const createFilmGenreMarkup = (genre) => {
   return `<span class="film-details__genre">${genre}</span>`;
 };
@@ -44,7 +53,6 @@ const createCommentContentTemplate = (comments) => {
   if (comments.length > 0) {
     return (
       `
-       <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
        <ul class="film-details__comments-list">
         ${createCommentListTemplate(comments)}
        </ul>
@@ -55,49 +63,23 @@ const createCommentContentTemplate = (comments) => {
   }
 };
 
-const createCommentWrapperTemplate = (comment) => {
-  return (
-    `<div class="form-details__bottom-container">
-          <section class="film-details__comments-wrap">
-
-            ${createCommentContentTemplate(comment)}
-
-            <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label"></div>
-
-              <label class="film-details__comment-label">
-                <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
-              </label>
-
-              <div class="film-details__emoji-list">
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="sleeping">
-                <label class="film-details__emoji-label" for="emoji-smile">
-                  <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-                </label>
-
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="neutral-face">
-                <label class="film-details__emoji-label" for="emoji-sleeping">
-                  <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-                </label>
-
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-gpuke" value="grinning">
-                <label class="film-details__emoji-label" for="emoji-gpuke">
-                  <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-                </label>
-
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="grinning">
-                <label class="film-details__emoji-label" for="emoji-angry">
-                  <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-                </label>
-              </div>
-            </div>
-          </section>
-        </div>`
-  );
+const createUserScoreTemplate = (score) => {
+  return new Array(USER_RATING_ITEMS).fill(``)
+    .map((element, index) => {
+      return (
+        `
+        <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="${index + 1}" id="rating-${index + 1}" ${score === index + 1 ? `checked` : ``}>
+        <label class="film-details__user-rating-label" for="rating-${index + 1}">${index + 1}</label>
+        `
+      );
+    })
+    .join(`\n`);
 };
 
-const createModalTemplate = (film) => {
-  const {name, rating, year, runtime, genres, poster, description, director, writers, actors, country, age, isWatchlist, isHistory, isFavorites} = film;
+const createModalTemplate = (film, commentOption, ratingUserOption) => {
+  const {name, rating, year, runtime, genres, poster, description, director, writers, actors, country, age, isWatchlist, isHistory, isFavorites, comments} = film;
+  const emojiImage = commentOption;
+  const userRatingScore = Number(ratingUserOption);
 
   const detailsRatingTemplate = (
     `<div class="form-details__middle-container">
@@ -117,33 +99,7 @@ const createModalTemplate = (film) => {
             <p class="film-details__user-rating-feelings">How you feel it?</p>
 
             <div class="film-details__user-rating-score">
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="1" id="rating-1">
-              <label class="film-details__user-rating-label" for="rating-1">1</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="2" id="rating-2">
-              <label class="film-details__user-rating-label" for="rating-2">2</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="3" id="rating-3">
-              <label class="film-details__user-rating-label" for="rating-3">3</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="4" id="rating-4">
-              <label class="film-details__user-rating-label" for="rating-4">4</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="5" id="rating-5">
-              <label class="film-details__user-rating-label" for="rating-5">5</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="6" id="rating-6">
-              <label class="film-details__user-rating-label" for="rating-6">6</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="7" id="rating-7">
-              <label class="film-details__user-rating-label" for="rating-7">7</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="8" id="rating-8">
-              <label class="film-details__user-rating-label" for="rating-8">8</label>
-
-              <input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="9" id="rating-9" checked="">
-              <label class="film-details__user-rating-label" for="rating-9">9</label>
-
+                ${createUserScoreTemplate(userRatingScore)}
             </div>
           </section>
         </div>
@@ -151,7 +107,7 @@ const createModalTemplate = (film) => {
     </div>`
   );
 
-  const userTotalRatingTemplate = `<p class="film-details__user-rating">Your rate 9</p>`;
+  const userTotalRatingTemplate = `<p class="film-details__user-rating">Your rate ${userRatingScore ? userRatingScore : ``}</p>`;
 
   const showRating = (isHistory) ? detailsRatingTemplate : ``;
   const showTotalRating = (isHistory) ? userTotalRatingTemplate : ``;
@@ -235,7 +191,43 @@ const createModalTemplate = (film) => {
 
         ${showRating}
 
-         ${createCommentWrapperTemplate(film.comments)}
+          <div class="form-details__bottom-container">
+            <section class="film-details__comments-wrap">
+                 <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length > 0 ? comments.length : `0`}</span></h3>
+                ${createCommentContentTemplate(comments)}
+              <div class="film-details__new-comment">
+                <div for="add-emoji" class="film-details__add-emoji-label">
+                  ${emojiImage ? `<img src="./images/emoji/${emojiImage}" alt="emoji" width="55" height="55">` : ``}
+                 </div>
+
+                <label class="film-details__comment-label">
+                  <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+                </label>
+
+                <div class="film-details__emoji-list">
+                  <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="emoji-smile">
+                  <label class="film-details__emoji-label" for="emoji-smile">
+                    <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+                  </label>
+
+                  <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="emoji-sleeping">
+                  <label class="film-details__emoji-label" for="emoji-sleeping">
+                    <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+                  </label>
+
+                  <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-gpuke" value="emoji-gpuke">
+                  <label class="film-details__emoji-label" for="emoji-gpuke">
+                    <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+                  </label>
+
+                  <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="emoji-angry">
+                  <label class="film-details__emoji-label" for="emoji-angry">
+                    <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+                  </label>
+                </div>
+            </div>
+            </section>
+          </div>
       </form>
     </section>`
   );
@@ -245,10 +237,13 @@ export default class Popup extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+    this._commentEmoji = null;
+    this._userRatingScore = null;
     this._closeButtonClickHandler = null;
     this._watchlistClickHandler = null;
     this._historyClickHandler = null;
     this._favoriteClickHandler = null;
+    this._subscribeOnEvents();
   }
 
   rerender() {
@@ -260,10 +255,11 @@ export default class Popup extends AbstractSmartComponent {
     this.setWatchlistClickHandler(this._watchlistClickHandler);
     this.setHistoryClickHandler(this._historyClickHandler);
     this.setFavoriteClickHandler(this._favoriteClickHandler);
+    this._subscribeOnEvents();
   }
 
   getTemplate() {
-    return createModalTemplate(this._film);
+    return createModalTemplate(this._film, this._commentEmoji, this._userRatingScore);
   }
 
   setCloseButtonClickHandler(handler) {
@@ -284,5 +280,29 @@ export default class Popup extends AbstractSmartComponent {
   setFavoriteClickHandler(handler) {
     this.getElement().querySelector(`#favorite`).addEventListener(`change`, handler);
     this._favoriteClickHandler = handler;
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+    const userRating = element.querySelector(`.film-details__user-rating-score`);
+    const resetUserRating = element.querySelector(`.film-details__watched-reset`);
+
+    element.querySelector(`.film-details__emoji-list`).addEventListener(`change`, (evt) => {
+      this._commentEmoji = smileImageMap[evt.target.value];
+      this.rerender();
+    });
+
+    if (userRating) {
+      userRating.addEventListener(`change`, (evt) => {
+        this._userRatingScore = evt.target.value;
+        this.rerender();
+      });
+
+      resetUserRating.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        this._userRatingScore = null;
+        this.rerender();
+      });
+    }
   }
 }
