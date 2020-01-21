@@ -1,3 +1,5 @@
+import {formatDateFilm, formatDateComment} from '../utils/common';
+
 const COUNT_FILMS = 15;
 
 const filmNames = [
@@ -103,12 +105,21 @@ const commentsText = [
   `Almost two hours? Seriously?`,
 ];
 
+const getRandomIntegerNumber = (min, max) => {
+  let rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+};
+
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
 const generateComment = () => {
   return {
     emoji: emojis[getRandomIntegerNumber(0, emojis.length - 1)],
     commentText: commentsText[getRandomIntegerNumber(0, commentsText.length - 1)],
     commentAuthor: `Tim Macoveev`,
-    commentDay: `2019/12/31 23:59`,
+    commentDay: `${formatDateComment(randomDate(new Date(getRandomIntegerNumber(1900, 2020), getRandomIntegerNumber(0, 12), getRandomIntegerNumber(0, 30)), new Date()))}`,
   };
 };
 
@@ -122,16 +133,12 @@ const generateComments = (count) => {
 
 const flags = [true, false];
 
-const getRandomIntegerNumber = (min, max) => {
-  let rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-};
-
 const generateFilm = () => {
   return {
     name: filmNames[getRandomIntegerNumber(0, filmNames.length - 1)],
     rating: `${getRandomIntegerNumber(0, 10)}.${getRandomIntegerNumber(0, 9)}`,
     year: getRandomIntegerNumber(1900, 2020),
+    releaseDate: formatDateFilm(randomDate(new Date(getRandomIntegerNumber(1900, 2020), getRandomIntegerNumber(0, 12), getRandomIntegerNumber(0, 30)), new Date())),
     runtime: `${getRandomIntegerNumber(1, 2)}h ${getRandomIntegerNumber(0, 59)}m`,
     genres: genres.slice(0, getRandomIntegerNumber(1, genres.length - 1)),
     poster: posters[getRandomIntegerNumber(0, posters.length - 1)],

@@ -77,7 +77,7 @@ const createUserScoreTemplate = (score) => {
 };
 
 const createModalTemplate = (film, commentOption, ratingUserOption) => {
-  const {name, rating, year, runtime, genres, poster, description, director, writers, actors, country, age, isWatchlist, isHistory, isFavorites, comments} = film;
+  const {name, rating, releaseDate, runtime, genres, poster, description, director, writers, actors, country, age, isWatchlist, isHistory, isFavorites, comments} = film;
   const emojiImage = commentOption;
   const userRatingScore = Number(ratingUserOption);
 
@@ -154,7 +154,7 @@ const createModalTemplate = (film, commentOption, ratingUserOption) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${year}</td>
+                  <td class="film-details__cell">${releaseDate}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
